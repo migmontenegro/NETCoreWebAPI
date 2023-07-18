@@ -1,6 +1,17 @@
+using Curso1.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var CadenaConexion = builder.Configuration.GetConnectionString("SiebelDS");
+
+builder.Services.AddDbContext<ModelContext>(x =>
+    x.UseOracle(CadenaConexion,
+    options => options.UseOracleSQLCompatibility("11")
+    )
+);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
